@@ -1,4 +1,6 @@
 add_triton_library(TritonGPUTransforms
+  ArithmeticTransformation.cpp
+  RemoveReduce.cpp
   AccelerateMatmul.cpp
   Canonicalize.cpp
   Coalesce.cpp

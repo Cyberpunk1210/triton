@@ -3,6 +3,28 @@
 
 include "mlir/Pass/PassBase.td"
 
+def TritonGPUArithmeticTransformation : Pass<"tritongpu-arithmetic-transformation", "mlir::ModuleOp"> {
+  let summary = "arithmetic-transformation";
+  let description = [{
+    Convert a contiguous division operation that has the same 
+    divisor or dividend to a multiplication operation.
+  }];
+
+  let dependentDialects = ["mlir::arith::ArithDialect",
+                           "mlir::triton::gpu::TritonGPUDialect",
+                           "mlir::scf::SCFDialect"];
+}
+
+def TritonGPURemoveReduced : Pass<"tritongpu-remove-reduce", "mlir::ModuleOp"> {
+  let summary = "removeReduce";
+  let description = [{
+    Remove redundant code that cannot be removed by CSE pass, such as load and reduce
+  }];
+  let dependentDialects = ["::mlir::triton::gpu::TritonGPUDialect",
+                           "mlir::scf::SCFDialect",
+                           "mlir::arith::ArithDialect"];
+}
+
 def TritonGPUPipeline : Pass<"tritongpu-pipeline", "mlir::ModuleOp"> {
   let summary = "pipeline";
 
